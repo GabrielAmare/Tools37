@@ -1,3 +1,6 @@
+import os
+
+
 class BaseFile:
     extension: str = ""
 
@@ -10,8 +13,14 @@ class BaseFile:
 
     @classmethod
     def _open_w(cls, fp: str):
-        return open(cls._parse_fp(fp), mode="w", encoding="utf-8")
+        try:
+            return open(cls._parse_fp(fp), mode="w", encoding="utf-8")
+        except FileNotFoundError as e:
+            raise FileNotFoundError(os.path.abspath(e.filename))
 
     @classmethod
     def _open_r(cls, fp: str):
-        return open(cls._parse_fp(fp), mode="r", encoding="utf-8")
+        try:
+            return open(cls._parse_fp(fp), mode="r", encoding="utf-8")
+        except FileNotFoundError as e:
+            raise FileNotFoundError(os.path.abspath(e.filename))
