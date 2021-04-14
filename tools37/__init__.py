@@ -3,7 +3,8 @@
 :project_description: various tools & utilitaries
 """
 
-from .files import *
+from .files import TextFile, CsvFile, JsonFile
+from .actions import Action, Batch, ActionManager, List, Dict, Object
 
 from .JsonLoader import JsonLoader
 from .MultiLang import MultiLang
