@@ -1,3 +1,4 @@
+import os
 import json
 from typing import Union
 from .BaseFile import BaseFile
@@ -15,3 +16,10 @@ class JsonFile(BaseFile):
     def load(cls, fp: str) -> Union[dict, list]:
         with cls._open_r(fp) as file:
             return json.load(file)
+
+    @classmethod
+    def load_init(cls, fp: str, default: Union[dict, list]):
+        if not os.path.exists(cls._parse_fp(fp)):
+            cls.save(fp, default)
+
+        return cls.load(fp)

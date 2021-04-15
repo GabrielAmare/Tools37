@@ -50,11 +50,14 @@ class MultiLang:
             root = self.data_holder.keys_to_path([lang, category]) if category else lang
             self.data_holder.import_file(fp, root)
 
-    def get(self, path: str) -> str:
+    def get(self, path: str, safe: bool = False) -> str:
         try:
             return self.data_holder.get(self.lang, path)
         except JsonLoader.CodeNotFoundError as e:
-            return e.code
+            if safe:
+                return e.code
+            else:
+                raise e
 
     __getitem__ = get
 

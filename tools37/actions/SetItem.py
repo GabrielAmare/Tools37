@@ -2,15 +2,15 @@ from .Action import Action
 
 
 class SetItem(Action):
-    def __init__(self, key: str, val: object):
+    def __init__(self, obj: dict, key: str, val: object):
         super().__init__()
+        self.obj = obj
         self.key = key
         self.had = None
         self.old = None
         self.val = val
 
-    def do(self, obj: dict) -> None:
-        self.obj = obj
+    def do(self) -> None:
         self.had = self.key in self.obj
         self.old = self.obj[self.key] if self.had else None
         self.obj[self.key] = self.val

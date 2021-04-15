@@ -10,10 +10,9 @@ class Batch(Action):
         super().__init__()
         self.actions = actions
 
-    def do(self, obj: object) -> None:
-        self.obj = obj
+    def do(self) -> None:
         for action in self.actions:
-            action.do(self.obj)
+            action.do()
 
     def undo(self) -> None:
         for action in reversed(self.actions):

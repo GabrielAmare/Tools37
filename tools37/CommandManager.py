@@ -24,6 +24,7 @@ class CommandManager:
         for name, binder in cls.__dict__.items():
             if isinstance(binder, _Binder):
                 cls.commands[binder.type] = binder.method
+                setattr(cls, name, binder.method)
 
     def __call__(self, obj: object):
         t = type(obj)

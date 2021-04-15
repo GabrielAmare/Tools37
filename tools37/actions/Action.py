@@ -1,8 +1,5 @@
 class Action:
-    def __init__(self):
-        self.obj = None
-
-    def do(self, obj: object) -> None:
+    def do(self) -> None:
         raise NotImplementedError
 
     def undo(self) -> None:

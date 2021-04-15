@@ -2,12 +2,12 @@ from .Action import Action
 
 
 class Append(Action):
-    def __init__(self, item: object):
+    def __init__(self, obj: list, item: object):
         super().__init__()
+        self.obj = obj
         self.item = item
 
-    def do(self, obj: list) -> None:
-        self.obj = obj
+    def do(self) -> None:
         self.obj.append(self.item)
 
     def undo(self) -> None:
