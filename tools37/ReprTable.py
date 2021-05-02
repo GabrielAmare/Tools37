@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, TypeVar, Dict, Callable
 
 __all__ = ["ReprTable", "make_chart"]
 
@@ -88,6 +88,9 @@ def make_chart(ih: str, iv: str, oh: str, ov: str,
     return c
 
 
+K = TypeVar("K")
+
+
 class ReprTable:
     SIMPLE = make_chart(*'SSSS')
     DOUBLE = make_chart(*'DDDD')
@@ -104,6 +107,11 @@ class ReprTable:
 
     BOLD_H = make_chart(*'BSBS')
     BOLD_V = make_chart(*'SBSB')
+
+    @classmethod
+    def from_items(cls, items: List[K], config: Dict[str, Callable[[K], str]]):
+        labels, functions = zip(*config.items())
+        return cls([labels] + [[function(item) for function in functions] for item in items])
 
     def __init__(self, data: List[List[str]], padx: int = 1, pady: int = 0, chart: str = BOLD_OUT):
         self.data: List[List[str]] = data
