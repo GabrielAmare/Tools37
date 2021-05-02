@@ -11,3 +11,5 @@ from .MultiLang import MultiLang
 from .ProgressBar import ProgressBar
 from .Console import Console, Chart
 from .CommandManager import CommandManager, bind_to
+
+from .ReprTable import ReprTable
