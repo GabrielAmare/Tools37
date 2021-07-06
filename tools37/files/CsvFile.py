@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union, Generator, Dict, Tuple
 from .BaseFile import BaseFile
 
 
@@ -30,3 +30,12 @@ class CsvFile(BaseFile):
                 else:
                     vals = cls._load_line(line)
                     yield dict(zip(keys, vals))
+
+    @classmethod
+    def add(cls, fp: str, keys: List[str], data: Union[Dict[str, str], List[Dict[str, str]]]):
+        if isinstance(data, dict):
+            data = [data]
+
+        with cls._open_a(fp) as file:
+            for vals in data:
+                file.write(cls._save_line(keys, vals))
