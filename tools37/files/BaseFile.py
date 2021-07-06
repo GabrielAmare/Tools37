@@ -28,3 +28,10 @@ class BaseFile:
             return open(cls._parse_fp(fp), mode="r", encoding="utf-8")
         except FileNotFoundError as e:
             raise FileNotFoundError(os.path.abspath(e.filename))
+
+    @classmethod
+    def _open_a(cls, fp: str):
+        try:
+            return open(cls._parse_fp(fp), mode="a", encoding="utf-8")
+        except FileNotFoundError as e:
+            raise FileNotFoundError(os.path.abspath(e.filename))
