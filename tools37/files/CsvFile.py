@@ -4,24 +4,37 @@ from .BaseFile import BaseFile
 
 class CsvFile(BaseFile):
     extension = ".csv"
+    COMMA_ALT = "<COMMA>"
+    NEWLINE_ALT = "<NEWLINE>"
 
     @classmethod
-    def _save_line(cls, keys: List[str], vals: dict):
-        return "\n" + ",".join(str(vals.get(key, '')) for key in keys)
+    def _save_arg(cls, arg: str) -> str:
+        return arg.replace(',', cls.COMMA_ALT).replace('\n', cls.NEWLINE_ALT)
 
     @classmethod
-    def save(cls, fp: str, keys: List[str], data: List[dict]) -> None:
+    def _save_line(cls, keys: List[str], vals: Dict[str, str]):
+        return "\n" + ",".join(cls._save_arg(str(vals.get(key, ''))) for key in keys)
+
+    @classmethod
+    def save(cls, fp: str, keys: List[str], data: List[Dict[str, str]]) -> None:
         with cls._open_w(fp) as file:
             file.write(",".join(keys))
             for vals in data:
                 file.write(cls._save_line(keys, vals))
 
     @classmethod
-    def _load_line(cls, line: str):
-        return tuple(map(str.strip, line.split(",")))
+    def _load_arg(cls, arg: str) -> str:
+        return arg.replace(cls.COMMA_ALT, ',').replace(cls.NEWLINE_ALT, '\n')
 
     @classmethod
-    def load(cls, fp: str) -> dict:
+    def _load_line(cls, line: str) -> Tuple[str]:
+        return tuple(
+            cls._load_arg(arg.strip())
+            for arg in line.split(',')
+        )
+
+    @classmethod
+    def load(cls, fp: str) -> Generator[Dict[str, str], None, None]:
         with cls._open_r(fp) as file:
             keys = None
             for line in file.readlines():
