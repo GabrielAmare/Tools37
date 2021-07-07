@@ -1,5 +1,15 @@
 HEX = "0123456789ABCDEF"
 
+BLACK = '#000000'
+WHITE = '#FFFFFF'
+RED = '#FF0000'
+GREEN = '#00FF00'
+BLUE = '#0000FF'
+CYAN = '#00FFFF'
+PURPLE = '#FF00FF'
+YELLOW = '#FFFF00'
+GRAY = '#777777'
+
 
 def is_hex_code(hex: str):
     """return True if the given string is a valid hexadecimal color code"""
