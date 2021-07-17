@@ -19,7 +19,7 @@ class JsonFile(BaseFile):
 
     @classmethod
     def load_init(cls, fp: str, default: Union[dict, list]):
-        if not os.path.exists(cls._parse_fp(fp)):
+        if not os.path.exists(cls.parse_fp(fp)):
             cls.save(fp, default)
 
         return cls.load(fp)
