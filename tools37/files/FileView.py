@@ -7,15 +7,10 @@ E = TypeVar('E')
 
 
 class FileView(Generic[E], PathView, ABC):
-    def __init__(self, path: str, factory: Type[E]):
-        """
-
-        :param file_path: The path of the file.
-        :param factory: The factory to build resource from file data.
-        """
+    def __init__(self, path: str, factory: Type[E], resource: E = None):
         super().__init__(path)
         self.factory: Type[E] = factory
-        self.resource: Optional[E] = None
+        self.resource: Optional[E] = resource
 
     @abstractmethod
     def load(self) -> None:
