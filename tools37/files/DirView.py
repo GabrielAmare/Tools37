@@ -51,3 +51,9 @@ class DirView(BaseDirView, ABC):
         dir_view.load()
         self.dir_views.append(dir_view)
         return dir_view
+
+    def save_json_file(self, name: str, resource: J) -> None:
+        path = self.sub_path(name)
+        file_view = JsonFileView(path, resource.__class__, resource)
+        file_view.save()
+        self.file_views.append(file_view)
