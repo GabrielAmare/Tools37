@@ -5,5 +5,6 @@ from .FileView import FileView
 from .JsonFile import JsonFile
 from .JsonFileView import JsonFileView
 from .PathView import PathView
+from .PngFile import PngFile
 from .PyFile import PyFile
 from .TextFile import TextFile
