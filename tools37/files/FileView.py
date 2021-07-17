@@ -5,7 +5,7 @@ from typing import TypeVar, Type, Optional, Generic
 E = TypeVar('E')
 
 
-class FileView(ABC, Generic[E]):
+class FileView(Generic[E], ABC):
     def __init__(self, file_path: str, factory: Type[E]):
         """
 
