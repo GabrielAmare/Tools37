@@ -33,6 +33,11 @@ D = TypeVar('D', bound=BaseDirView)
 
 
 class DirView(BaseDirView, ABC):
+    def __init__(self, path: str, force_create: bool = False):
+        super().__init__(path)
+        if force_create and not self.exists():
+            os.mkdir(self.path)
+
     def load_json_file(self, name: str, factory: Type[J]) -> J:
         path = self.sub_path(name)
         file_view = JsonFileView(path, factory)
