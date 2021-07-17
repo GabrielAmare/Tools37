@@ -45,9 +45,9 @@ class DirView(BaseDirView, ABC):
         self.file_views.append(file_view)
         return file_view.resource
 
-    def load_dir(self, name: str, factory: Type[D]) -> D:
-        path = self.sub_path(name)
-        dir_view = factory(path)
+    def load_dir(self, __name: str, __factory: Type[D], *args, **kwargs) -> D:
+        path = self.sub_path(__name)
+        dir_view = __factory(path, *args, **kwargs)
         dir_view.load()
         self.dir_views.append(dir_view)
         return dir_view
