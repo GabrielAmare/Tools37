@@ -1,19 +1,17 @@
 from __future__ import annotations
 
 from numbers import Real
-from typing import TypeVar, Generator, Generic
+from typing import Generator
 
 from tools37.Typed import Typed, typedmethod, TypedArg
 
-N = TypeVar('N', bound=Real)
 
+class Vector(Typed):
+    def __init__(self, x: Real, y: Real):
+        self.x: Real = x
+        self.y: Real = y
 
-class Vector(Generic[N], Typed):
-    def __init__(self, x: N, y: N):
-        self.x: N = x
-        self.y: N = y
-
-    def __iter__(self) -> Generator[N]:
+    def __iter__(self) -> Generator[Real, None, None]:
         yield self.x
         yield self.y
 
@@ -26,7 +24,7 @@ class Vector(Generic[N], Typed):
     def __eq__(self, other):
         return type(self) is type(other) and self.x == other.x and self.y == other.y
 
-    def __getitem__(self, index: int) -> N:
+    def __getitem__(self, index: int) -> Real:
         if index == 0:
             return self.x
         elif index == 1:
@@ -34,7 +32,7 @@ class Vector(Generic[N], Typed):
         else:
             raise IndexError(index)
 
-    def __setitem__(self, index: int, value: N) -> None:
+    def __setitem__(self, index: int, value: Real) -> None:
         if index == 0:
             self.x = value
         elif index == 1:
@@ -42,7 +40,7 @@ class Vector(Generic[N], Typed):
         else:
             raise IndexError(index)
 
-    def __abs__(self) -> N:
+    def __abs__(self) -> Real:
         return (self.x ** 2 + self.y ** 2) ** 0.5
 
     ####################################################################################################################
@@ -90,12 +88,12 @@ class Vector(Generic[N], Typed):
         return Vector(self.x - other.x, self.y - other.y)
 
     @typedmethod(TypedArg.CLASS)
-    def __mul__(self, other) -> N:
+    def __mul__(self, other) -> Real:
         """Represent the inner product of two vectors."""
         return self.x * other.x + self.y * other.y
 
     @typedmethod(TypedArg.CLASS)
-    def __xor__(self, other) -> N:
+    def __xor__(self, other) -> Real:
         """Represent the outer product of two vectors."""
         return self.x * other.y - self.y * other.x
 
