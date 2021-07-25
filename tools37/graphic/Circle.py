@@ -14,3 +14,11 @@ class Circle(geom.Circle, GraphicShape):
 
     def coords(self):
         return map(int, (self.x - self.r, self.y - self.r, self.x + self.r, self.y + self.r))
+
+    @property
+    def c(self) -> geom.Coords:
+        return geom.Coords(self.x, self.y)
+
+    @c.setter
+    def c(self, value: geom.Coords):
+        self.x, self.y = value
