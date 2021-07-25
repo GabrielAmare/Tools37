@@ -5,6 +5,8 @@ from .BoundingBox import BoundingBox
 
 class AbsoluteBoundingBox(BoundingBox):
     def __init__(self, xi: Real, yi: Real, xf: Real, yf: Real):
+        assert xi < xf
+        assert yi < yf
         self.xi: Real = xi
         self.yi: Real = yi
         self.xf: Real = xf

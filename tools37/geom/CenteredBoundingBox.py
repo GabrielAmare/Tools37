@@ -5,6 +5,8 @@ from .BoundingBox import BoundingBox
 
 class CenteredBoundingBox(BoundingBox):
     def __init__(self, x: Real, y: Real, dx: Real, dy: Real):
+        assert float(dx) > 0
+        assert float(dy) > 0
         self.x: Real = x
         self.y: Real = y
         self.dx: Real = dx
