@@ -99,5 +99,65 @@ class TestVector(unittest.TestCase):
                 self.assertAlmostEqual((u * v) ** 2 + (u ^ v) ** 2, abs(u) ** 2 * abs(v) ** 2, 9)
 
 
+class TestVectorBase(unittest.TestCase):
+    def test_repr(self):
+        """Test the __repr__ method. (by using the property eval(repr(obj)) == obj)"""
+        for u in VECTOR_LIST:
+            for v in VECTOR_LIST:
+                if u ^ v != 0:
+                    b = VectorBase(u, v)
+                    self.assertEqual(eval(repr(b)), b)
+
+    def test_abs(self):
+        """Check the __abs__ method."""
+        ex = Vector(2, 2)
+        ey = Vector(-2, 2)
+        b = VectorBase(ex, ey)
+        self.assertEqual(abs(b), 8)
+
+    def test_getitem(self):
+        """Check the __getitem__ method."""
+        ex = Vector(2, 2)
+        ey = Vector(-2, 2)
+        b = VectorBase(ex, ey)
+
+        self.assertEqual(b[0], ex)
+        self.assertEqual(b[1], ey)
+        self.assertRaises(IndexError, lambda: b[-1])
+        self.assertRaises(IndexError, lambda: b[-2])
+        self.assertRaises(IndexError, lambda: b[2])
+
+    def test_setitem(self):
+        """Check the __setitem__ method."""
+        ex = Vector(2, 2)
+        ey = Vector(-2, 2)
+        b = VectorBase(ex, ey)
+
+        b[0] = ey
+        b[1] = ex
+        self.assertEqual(b[0], ey)
+        self.assertEqual(b[1], ex)
+
+    def test_lshift(self):
+        ex = Vector(1, 3)
+        ey = Vector(2, 5)
+        b = VectorBase(ex, ey)
+
+        v = Vector(3, 8)
+
+        self.assertEqual(b << v, Vector(1, 1))
+        self.assertEqual(v >> b, Vector(1, 1))
+
+    def test_mul(self):
+        ex = Vector(1, 3)
+        ey = Vector(2, 5)
+        b = VectorBase(ex, ey)
+
+        v = Vector(1, 1)
+
+        self.assertEqual(b * v, Vector(3, 8))
+        self.assertEqual(v * b, Vector(3, 8))
+
+
 if __name__ == '__main__':
     unittest.main()
