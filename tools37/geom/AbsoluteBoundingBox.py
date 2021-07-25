@@ -12,21 +12,26 @@ class AbsoluteBoundingBox(BoundingBox):
         self.xf: Real = xf
         self.yf: Real = yf
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.xi!r}, {self.yi!r}, {self.xf!r}, {self.yf!r})"
+
     @property
     def x(self) -> Real:
         return (self.xi + self.xf) / 2
 
     @x.setter
     def x(self, value: Real):
-        self.xi, self.xf = value - self.dx, value + self.dx
+        dx = self.dx
+        self.xi, self.xf = value - dx, value + dx
 
     @property
     def y(self) -> Real:
-        return (self.xi + self.xf) / 2
+        return (self.yi + self.yf) / 2
 
     @y.setter
     def y(self, value: Real):
-        self.yi, self.yf = value - self.dy, value + self.dy
+        dy = self.dy
+        self.yi, self.yf = value - dy, value + dy
 
     @property
     def dx(self) -> Real:
@@ -34,7 +39,8 @@ class AbsoluteBoundingBox(BoundingBox):
 
     @dx.setter
     def dx(self, value: Real):
-        self.xi, self.xf = self.x - value, self.x + value
+        x = self.x
+        self.xi, self.xf = x - value, x + value
 
     @property
     def dy(self) -> Real:
@@ -42,4 +48,5 @@ class AbsoluteBoundingBox(BoundingBox):
 
     @dy.setter
     def dy(self, value: Real):
-        self.yi, self.yf = self.y - value, self.y + value
+        y = self.y
+        self.yi, self.yf = y - value, y + value
