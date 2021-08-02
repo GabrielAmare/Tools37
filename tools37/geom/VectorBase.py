@@ -7,7 +7,10 @@ from .Vector import Vector, Real
 class VectorBase(Typed):
     """Represent a basis of two vectors ex and ey."""
 
-    def __init__(self, ex: Vector, ey: Vector):
+    def __init__(self, ex: Vector, ey: Vector = None):
+        if ey is None:
+            ey = ex.__orth__()
+
         assert ex ^ ey != 0
         self.ex: Vector = ex
         self.ey: Vector = ey
