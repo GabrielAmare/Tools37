@@ -12,11 +12,14 @@ if __name__ == "__main__":
         packages=[
             "tools37",
             "tools37.actions",
+            "tools37.algebra",
             "tools37.console",
             "tools37.events",
             "tools37.files",
             "tools37.geom",
+            "tools37.graphic",
             "tools37.logger",
+            "tools37.physics",
         ],
         classifiers=[],
         python_requires=">=3.7"
