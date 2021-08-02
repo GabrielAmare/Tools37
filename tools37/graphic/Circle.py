@@ -8,17 +8,9 @@ from .GraphicShape import GraphicShape
 class Circle(geom.Circle, GraphicShape):
     create_method = Canvas.create_oval
 
-    def __init__(self, cnv: Canvas, x: Real, y: Real, r: Real, **config):
-        geom.Circle.__init__(self, x, y, r)
+    def __init__(self, cnv: Canvas, center: geom.Coords, radius: Real, **config):
+        geom.Circle.__init__(self, center, radius)
         GraphicShape.__init__(self, cnv, **config)
 
     def coords(self):
-        return map(int, (self.x - self.r, self.y - self.r, self.x + self.r, self.y + self.r))
-
-    @property
-    def c(self) -> geom.Coords:
-        return geom.Coords(self.x, self.y)
-
-    @c.setter
-    def c(self, value: geom.Coords):
-        self.x, self.y = value
+        return map(int, (*(self.center - self.radius), *(self.center + self.radius)))

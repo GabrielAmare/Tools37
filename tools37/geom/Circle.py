@@ -5,28 +5,25 @@ from .Coords import Coords
 
 
 class Circle(Typed):
-    def __init__(self, x: Real, y: Real, r: Real):
-        assert float(r) > 0
-        self.x: Real = x
-        self.y: Real = y
-        self.r: Real = r
+    def __init__(self, center: Coords, radius: Real):
+        assert float(radius) > 0
+        self.center: Coords = center
+        self.radius: Real = radius
 
     def __repr__(self):
-        return f"{self.__class__.__name__}({self.x!r}, {self.y!r}, {self.r!r})"
+        return f"{self.__class__.__name__}({self.center!r}, {self.radius!r})"
 
     def __eq__(self, other):
-        return type(self) is type(other) and self.x == other.x and self.y == other.y and self.r == other.r
+        return type(self) is type(other) and self.center == other.center and self.radius == other.radius
 
     @typedmethod(Coords)
     def __contains__(self, other: Coords) -> bool:
-        center = Coords(self.x, self.y)
-        return abs(other - center) <= self.r
+        return abs(other - self.center) <= self.radius
 
     @typedmethod(Coords)
     def __lshift__(self, other: Coords) -> Coords:
         """Return the projection of other on the border of self."""
-        center = Coords(self.x, self.y)
-        return center + self.r * (other - center).__unit__()
+        return self.center + self.radius * (other - self.center).__unit__()
 
     @typedmethod(Coords)
     def __rrshift__(self, other: Coords) -> Coords:
