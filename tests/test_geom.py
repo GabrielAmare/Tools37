@@ -1,3 +1,4 @@
+import math
 import random
 import unittest
 
@@ -81,12 +82,17 @@ class TestVector(unittest.TestCase):
         """Check the __xor__ method."""
         ex = Vector(1, 0)
         ey = Vector(0, 1)
+        em = Vector(2 ** 0.5, 2 ** 0.5)
 
         self.assertEqual(ex ^ ey, 1)
         self.assertEqual(ey ^ ex, -1)
         self.assertEqual(ex ^ ex, 0)
         self.assertEqual(ey ^ ey, 0)
         self.assertRaises(TypeError, lambda: ex ^ 2)
+        self.assertEqual(ex ^ em, 2 ** 0.5)
+        self.assertEqual(ex ^ -em, -2 ** 0.5)
+        self.assertEqual(em ^ ex, -2 ** 0.5)
+        self.assertEqual(em ^ -ex, 2 ** 0.5)
 
     def test_products(self):
         """
