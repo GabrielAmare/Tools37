@@ -11,12 +11,12 @@ if __name__ == "__main__":
         url="https://github.com/GabrielAmare/Tools37",
         packages=[
             "tools37",
-            "tools37.files",
             "tools37.actions",
             "tools37.console",
-            "tools37.logger",
             "tools37.events",
-            "tools37.geom"
+            "tools37.files",
+            "tools37.geom",
+            "tools37.logger",
         ],
         classifiers=[],
         python_requires=">=3.7"
