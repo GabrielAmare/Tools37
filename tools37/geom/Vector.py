@@ -43,8 +43,14 @@ class Vector(Typed):
     def __abs__(self) -> Real:
         return (self.x ** 2 + self.y ** 2) ** 0.5
 
-    def __unit__(self) -> Coords:
+    def __unit__(self) -> Vector:
         return self / abs(self)
+
+    def __orth__(self) -> Vector:
+        return Vector(-self.y, self.x)
+
+    def __neg__(self):
+        return Vector(-self.x, -self.y)
 
     ####################################################################################################################
     # VECTOR x SCALAR operations
@@ -77,6 +83,15 @@ class Vector(Typed):
     @typedmethod(Real)
     def __truediv__(self, other) -> Vector:
         return Vector(self.x / other, self.y / other)
+
+    @typedmethod(int)
+    def __pow__(self, power: int):
+        d, r = divmod(power, 2)
+        n = (self.x ** 2 + self.y ** 2) ** d
+        if r:
+            return n * self
+        else:
+            return n
 
     ####################################################################################################################
     # VECTOR x VECTOR operations
