@@ -20,8 +20,6 @@ if __name__ == "__main__":
             "tools37.graphic",
             "tools37.logger",
             "tools37.physics",
-            "tools37.formats",
-            "tools37.queries"
         ],
         classifiers=[],
         python_requires=">=3.7"
