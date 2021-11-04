@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from tools37.colors import hex_to_rgb
+from tools37.colors import hex_to_rgb, FOREGROUND_CONSOLE_COLORS, BACKGROUND_CONSOLE_COLORS
 from tools37.ProgressBar import ProgressBar
 
 
@@ -23,48 +23,20 @@ class Chart:
     @staticmethod
     def foreground(code: str) -> str:
         """Convert hexadecimal color code into console foreground color code"""
-        if code == "black":
-            return '\33[30m'
-        elif code == "red":
-            return '\33[31m'
-        elif code == "green":
-            return '\33[32m'
-        elif code == "yellow":
-            return '\33[33m'
-        elif code == "blue":
-            return '\33[34m'
-        elif code == "violet":
-            return '\33[35m'
-        elif code == "beige":
-            return '\33[36m'
-        elif code == "white":
-            return '\33[37m'
-        else:
-            r, g, b = hex_to_rgb(code)
-            return f"\033[38;2;{r};{g};{b}m"
+        try:
+            return FOREGROUND_CONSOLE_COLORS[code]
+
+        except KeyError:
+            return "\033[38;2;%s;%s;%sm" % hex_to_rgb(code)
 
     @staticmethod
     def background(code: str) -> str:
         """Convert hexadecimal color code into console background color code"""
-        if code == "black":
-            return '\33[40m'
-        elif code == "red":
-            return '\33[41m'
-        elif code == "green":
-            return '\33[42m'
-        elif code == "yellow":
-            return '\33[43m'
-        elif code == "blue":
-            return '\33[44m'
-        elif code == "violet":
-            return '\33[45m'
-        elif code == "beige":
-            return '\33[46m'
-        elif code == "white":
-            return '\33[47m'
-        else:
-            r, g, b = hex_to_rgb(code)
-            return f"\033[48;2;{r};{g};{b}m"
+        try:
+            return BACKGROUND_CONSOLE_COLORS[code]
+
+        except KeyError:
+            return f"\033[48;2;%s;%s;%sm" % hex_to_rgb(code)
 
     def __init__(self, **config):
         self.config = {}
@@ -264,4 +236,3 @@ class _Action:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.csl -= 1
         self.csl.print(self.message, "END")
-
