@@ -1,4 +1,5 @@
 from typing import Generic, List, TypeVar, Iterator
+
 from .Emitter import Emitter
 
 E = TypeVar('E')

@@ -1,19 +1,14 @@
-from typing import Dict, List
+from .EventService import EventService
 
 
 class Emitter:
-    def __init__(self):
-        self._callbacks: Dict[str, List[callable]] = {}
-
     def emit(self, key: str, *args, **kwargs):
         """Emit ``key`` with some args & kwargs"""
-        for callback in self._callbacks.get(key, []):
-            callback(*args, **kwargs)
+        EventService.emit(self, key, *args, **kwargs)
 
     def on(self, key: str, callback: callable):
         """Register a ``callback`` for further emits of ``key``"""
-        self._callbacks.setdefault(key, [])
-        self._callbacks[key].append(callback)
+        EventService.on(self, key, callback)
 
     @staticmethod
     def method_decorator(key):
