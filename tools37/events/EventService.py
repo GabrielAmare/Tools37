@@ -2,7 +2,7 @@ from typing import Dict, List, Callable
 
 
 class EventService:
-    _callbacks: Dict[int, Dict[str, List[callable]]]
+    _callbacks: Dict[int, Dict[str, List[callable]]] = {}
 
     @classmethod
     def on(cls, obj: object, evt: str, callback: callable) -> Callable[[], None]:
