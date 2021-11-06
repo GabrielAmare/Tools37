@@ -1,1 +1,2 @@
-from .Console import Console
+from .BaseConsole import BaseConsole
+from .LogConsole import LogConsole
