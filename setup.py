@@ -18,8 +18,8 @@ if __name__ == "__main__":
             "tools37.files",
             "tools37.geom",
             "tools37.graphic",
-            "tools37.logger",
             "tools37.physics",
+            "tools37.text",
         ],
         classifiers=[],
         python_requires=">=3.7"
