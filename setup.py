@@ -14,7 +14,6 @@ if __name__ == "__main__":
             "tools37.actions",
             "tools37.algebra",
             "tools37.console",
-            "tools37.events",
             "tools37.files",
             "tools37.geom",
             "tools37.graphic",
