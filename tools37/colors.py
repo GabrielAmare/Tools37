@@ -11,29 +11,6 @@ YELLOW = '#FFFF00'
 GRAY = '#777777'
 
 
-FOREGROUND_CONSOLE_COLORS = {
-    "black": '\33[30m',
-    "red": '\33[31m',
-    "green": '\33[32m',
-    "yellow": '\33[33m',
-    "blue": '\33[34m',
-    "violet": '\33[35m',
-    "beige": '\33[36m',
-    "white": '\33[37m'
-}
-BACKGROUND_CONSOLE_COLORS = {
-    "black": '\33[40m',
-    "red": '\33[41m',
-    "green": '\33[42m',
-    "yellow": '\33[43m',
-    "blue": '\33[44m',
-    "violet": '\33[45m',
-    "beige": '\33[46m',
-    "white": '\33[47m',
-}
-
-
-
 def is_hex_code(hex: str):
     """return True if the given string is a valid hexadecimal color code"""
     # TODO : add minified hexadecimal codes such as "#FF0"
