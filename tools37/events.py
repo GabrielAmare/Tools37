@@ -76,7 +76,7 @@ class Observer:
 
     def on(self, obj: Emitter, evt: str, callback: callable):
         """Register a ``callback`` for further emits of ``key``"""
-        EventService.on(_object_event(obj, evt), callback)
+        return EventService.on(_object_event(obj, evt), callback)
 
 
 class Transmitter(Emitter, Observer):
