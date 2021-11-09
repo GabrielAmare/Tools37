@@ -49,7 +49,7 @@ class emitmethod:
         if isinstance(__evt, str):
             return lambda method: __wrapper(method, __evt)
         elif hasattr(__evt, '__call__'):
-            return cls._before(__evt, __evt.__name__)
+            return __wrapper(__evt, __evt.__name__)
         else:
             raise ValueError(__evt)
 
@@ -91,7 +91,7 @@ class Transmitter(Emitter, Observer):
 E = TypeVar('E')
 
 
-class EmitterList(Generic[E], List[E], Emitter, list):
+class EmitterList(Generic[E], List[E], Emitter):
     """This list subclass emit events whenever its items are modified."""
 
     def __repr__(self) -> str:
