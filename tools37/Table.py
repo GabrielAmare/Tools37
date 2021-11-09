@@ -22,6 +22,10 @@ class TableInterface(Generic[E], ABC):
         """"""
 
     @abstractmethod
+    def get_row(self, index: int) -> List[E]:
+        """"""
+
+    @abstractmethod
     def pop_row(self, index: int) -> List[E]:
         """"""
 
@@ -39,6 +43,10 @@ class TableInterface(Generic[E], ABC):
 
     @abstractmethod
     def set_col(self, index: int, elements: List[E]) -> None:
+        """"""
+
+    @abstractmethod
+    def get_col(self, index: int) -> List[E]:
         """"""
 
     @abstractmethod
@@ -81,6 +89,9 @@ class Table(Generic[E], TableInterface[E]):
         assert len(elements) == self.n_cols
         self.data[index] = elements
 
+    def get_row(self, index: int) -> List[E]:
+        return self.data[index]
+
     def pop_row(self, index: int) -> List[E]:
         elements = self.data.pop(index)
         self.n_rows -= 1
@@ -106,6 +117,9 @@ class Table(Generic[E], TableInterface[E]):
         assert len(elements) == self.n_rows
         for row, element in zip(self.data, elements):
             row[index] = element
+
+    def get_col(self, index: int) -> List[E]:
+        return [row[index] for row in self.data]
 
     def pop_col(self, index: int) -> List[E]:
         elements = [row.pop(index) for row in self.data]
