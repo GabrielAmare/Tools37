@@ -46,7 +46,7 @@ class TableInterface(Generic[E], ABC):
         """"""
 
 
-class Table(TableInterface[E]):
+class Table(Generic[E], TableInterface[E]):
     @classmethod
     def sized(cls, n_rows: int, n_cols: int, default: E = None):
         return cls([
