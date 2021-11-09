@@ -1,5 +1,4 @@
-from typing import Dict, Callable, Union
-from typing import List
+from typing import Dict, Callable, Union, List, TypeVar, Generic
 
 
 class EventService:
@@ -89,7 +88,10 @@ class Transmitter(Emitter, Observer):
         self.on(obj, evt, callback)
 
 
-class EmitterList(Emitter, list):
+E = TypeVar('E')
+
+
+class EmitterList(Generic[E], List[E], Emitter, list):
     """This list subclass emit events whenever its items are modified."""
 
     def __repr__(self) -> str:
