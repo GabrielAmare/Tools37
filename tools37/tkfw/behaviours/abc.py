@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import ClassVar, Callable, Optional, Union, Tuple
+from typing import ClassVar, Callable, Optional, Union, Tuple, List
 
 from ..dynamic import DynamicData, DynamicStyle, DynamicList, DynamicGetter, DynamicSetter
-from ..evaluable import Evaluable
+from ..evaluable import Evaluable, EvaluablePath
 
 __all__ = [
     'HasStyle',
@@ -100,6 +100,11 @@ class HasLogic(ABC):
     @abstractmethod
     def evaluate_condition(cls, data: DynamicData) -> bool:
         """Return True if the class condition is fulfilled by the given data."""
+
+    @classmethod
+    @abstractmethod
+    def get_condition_paths(cls) -> List[EvaluablePath]:
+        """Return all the EvaluablePath that the class condition rely on."""
 
 
 class HasValue(ABC):
