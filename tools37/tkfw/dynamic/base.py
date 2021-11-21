@@ -75,8 +75,8 @@ class DynamicDict(dict, abc.DynamicDict):
                 if isinstance(value, Emitter):
                     self.forget(name='*', emitter=value)
 
-    def __getitem__(self, index: int):
-        return dict.__getitem__(self, index)
+    def __getitem__(self, key: str):
+        return dict.__getitem__(self, key)
 
     @update_events
     def __setitem__(self, key, value):
