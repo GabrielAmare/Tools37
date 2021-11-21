@@ -5,7 +5,7 @@
 
 from .files import *
 from .actions import Action, Batch, ActionManager, List, Dict, Object
-from .events import EventService, Emitter, Observer, Transmitter, EmitterList, emitmethod
+from .events import Emitter, Observer, Transmitter
 from .data import DictInterface, ListInterface, JsonInterface, JsonDictInterface, JsonListInterface
 from .JsonLoader import JsonLoader
 from .MultiLang import MultiLang
