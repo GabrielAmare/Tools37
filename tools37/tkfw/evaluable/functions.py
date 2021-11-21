@@ -73,15 +73,29 @@ _STRING_REGEX = re.compile(r'^(\'[^\']*?\'|\"[^\"]*?\")$')
 def as_evaluable_expression(expr: str) -> EvaluableExpression:
     expr = expr.strip()
 
-    if expr.startswith('not '):
-        right_path = expr[len('not '):]
-        return EvaluableNot(
-            right=as_evaluable_expression(right_path)
+    if ' or ' in expr:
+        left_path, right_path = expr.split(' or ', 1)
+        return EvaluableOr(
+            left=as_evaluable_expression(left_path),
+            right=as_evaluable_expression(right_path),
         )
 
     elif ' and ' in expr:
         left_path, right_path = expr.split(' and ', 1)
         return EvaluableAnd(
+            left=as_evaluable_expression(left_path),
+            right=as_evaluable_expression(right_path),
+        )
+
+    elif expr.startswith('not '):
+        right_path = expr[len('not '):]
+        return EvaluableNot(
+            right=as_evaluable_expression(right_path)
+        )
+
+    elif ' in ' in expr:
+        left_path, right_path = expr.split(' in ', 1)
+        return EvaluableIn(
             left=as_evaluable_expression(left_path),
             right=as_evaluable_expression(right_path),
         )
