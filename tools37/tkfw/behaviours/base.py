@@ -186,7 +186,7 @@ class HasLogic(abc.HasLogic):
             return cls._condition
 
         elif isinstance(cls._condition, Evaluable):
-            return bool(cls._condition.evaluate(data))
+            return bool(cls._condition.evaluate(data=data.view()))
 
         else:
             console.warning(f"{cls.__name__}.__if__ invalid type {type(condition).__name__!r}.")
