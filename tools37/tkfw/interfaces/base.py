@@ -72,8 +72,14 @@ class UnitWidgetBuilder(WidgetBuilder, abc.UnitWidgetBuilder):
 
     def build(self):
         """This will create the initial list of widgets."""
-        if self.widget is None:
-            self.widget = self.create(data={}, style={})
+        if self.should_build():
+            if self.widget is None:
+                self.widget = self.create(data={}, style={})
+        else:
+            if self.widget is not None:
+                self.widget.grid_forget()
+                self.widget.destroy()
+                self.widget = None
 
     def get_widgets(self) -> List[abc.Child]:
         if self.widget is None:
@@ -106,7 +112,10 @@ class ListWidgetBuilder(WidgetBuilder, abc.ListWidgetBuilder):
 
     def build(self):
         """This will build widgets so they fit the iterable."""
-        elements = self.iterable
+        if self.should_build():
+            elements = self.iterable
+        else:
+            elements = []
 
         if len(elements) > len(self.widgets):
             # we should create new widgets.
