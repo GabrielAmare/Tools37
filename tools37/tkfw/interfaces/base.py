@@ -50,6 +50,12 @@ class WidgetBuilder(Observer, abc.WidgetBuilder, ABC):
         self.parent: abc.Parent = parent
         self.factory: Type[abc.Child] = factory
 
+        for path in self.factory.get_condition_paths():
+            self.on(name=f".{path!s}", emitter=self.parent.data, function=self.rebuild)
+
+    def rebuild(self, _: Event = None):
+        self.build()
+        self.update_parent()
 
     def update_parent(self):
         self.parent.update()
