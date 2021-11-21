@@ -1,12 +1,12 @@
 import tkinter as tk
 from enum import Enum
-from typing import Optional, ClassVar, Callable, Union, Tuple
+from typing import Optional, ClassVar, Callable, Union, Tuple, List
 
 from . import abc
 from ..console import console
 from ..dynamic import view, Dynamic, DynamicStyle, DynamicData, DynamicDict, DynamicList, DynamicSetter, DynamicGetter
 from ..evaluable import evaluate, Evaluable, EvaluableSetter, EvaluableGetter, EvaluablePath, as_evaluable_path, \
-    as_evaluable_expression
+    as_evaluable_expression, EvaluableExpression
 from ..events import Observer, Event
 from ..functions import init_from_factory
 
@@ -191,6 +191,17 @@ class HasLogic(abc.HasLogic):
         else:
             console.warning(f"{cls.__name__}.__if__ invalid type {type(condition).__name__!r}.")
             return False
+
+    @classmethod
+    def get_condition_paths(cls) -> List[EvaluablePath]:
+        if isinstance(cls._condition, bool):
+            return []
+
+        elif isinstance(cls._condition, EvaluableExpression):
+            return cls._condition.get_paths()
+
+        else:
+            raise TypeError(cls._condition)
 
 
 class HasValue(abc.HasValue):
