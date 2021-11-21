@@ -7,7 +7,8 @@ from .base import *
 __all__ = [
     'as_evaluable_path',
     'as_evaluable_text',
-    'evaluate'
+    'evaluate',
+    'as_evaluable_expression'
 ]
 
 _PATTERN_REGEX = re.compile(r'{{[^{}]*?}}')
@@ -64,3 +65,43 @@ def evaluate(value: Any, data: Any) -> Any:
 
     else:
         return value
+
+
+_STRING_REGEX = re.compile(r'^(\'[^\']*?\'|\"[^\"]*?\")$')
+
+
+def as_evaluable_expression(expr: str) -> EvaluableExpression:
+    expr = expr.strip()
+
+    if expr.startswith('not '):
+        right_path = expr[len('not '):]
+        return EvaluableNot(
+            right=as_evaluable_expression(right_path)
+        )
+
+    elif ' and ' in expr:
+        left_path, right_path = expr.split(' and ', 1)
+        return EvaluableAnd(
+            left=as_evaluable_expression(left_path),
+            right=as_evaluable_expression(right_path),
+        )
+
+    elif '==' in expr:
+        left_path, right_path = expr.split('==', 1)
+        return EvaluableEq(
+            left=as_evaluable_expression(left_path),
+            right=as_evaluable_expression(right_path),
+        )
+
+    elif '!=' in expr:
+        left_path, right_path = expr.split('!=', 1)
+        return EvaluableNe(
+            left=as_evaluable_expression(left_path),
+            right=as_evaluable_expression(right_path),
+        )
+
+    elif _STRING_REGEX.match(expr):
+        return EvaluableStr(value=expr)
+
+    else:
+        return as_evaluable_path(path=expr)
