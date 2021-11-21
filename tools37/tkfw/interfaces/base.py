@@ -50,6 +50,10 @@ class WidgetBuilder(Observer, abc.WidgetBuilder, ABC):
         self.parent: abc.Parent = parent
         self.factory: Type[abc.Child] = factory
 
+
+    def update_parent(self):
+        self.parent.update()
+
     def create(self, data: dict = None, style: dict = None) -> abc.Child:
         return self.factory(parent=self.parent, data=data, style=style)
 
@@ -137,9 +141,6 @@ class ListWidgetBuilder(WidgetBuilder, abc.ListWidgetBuilder):
             element = DynamicListItem(data=self.iterable, index=index)
 
         return self.create(data={'index': index, self.key: element}, style={})
-
-    def update_parent(self):
-        self.parent.update()
 
     def on_model_append(self, event: Event) -> None:
         if self.should_build():
