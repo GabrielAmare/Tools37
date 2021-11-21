@@ -321,3 +321,14 @@ class Tree(HasValue, Child, Parent):
 
         for child in self.widgets:
             child.update()
+
+    def __getattr__(self, key):
+        try:
+            return super().__getattribute__(key)
+
+        except AttributeError:
+            if self.parent:
+                return getattr(self.parent, key)
+
+            else:
+                raise AttributeError(key)
