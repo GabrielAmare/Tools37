@@ -5,7 +5,8 @@ from typing import Optional, ClassVar, Callable, Union, Tuple
 from . import abc
 from ..console import console
 from ..dynamic import view, Dynamic, DynamicStyle, DynamicData, DynamicDict, DynamicList, DynamicSetter, DynamicGetter
-from ..evaluable import evaluate, Evaluable, EvaluableSetter, EvaluableGetter, EvaluablePath, as_evaluable_path
+from ..evaluable import evaluate, Evaluable, EvaluableSetter, EvaluableGetter, EvaluablePath, as_evaluable_path, \
+    as_evaluable_expression
 from ..events import Observer, Event
 from ..functions import init_from_factory
 
@@ -171,7 +172,7 @@ class HasLogic(abc.HasLogic):
             cls._condition = _condition
 
         elif isinstance(_condition, str):
-            cls._condition = as_evaluable_path(path=_condition)
+            cls._condition = as_evaluable_expression(expr=_condition)
 
         else:
             raise TypeError(f"{cls.__name__}.__if__ should be bool | EvaluableBoolean.")
