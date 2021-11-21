@@ -165,7 +165,7 @@ class ListWidgetBuilder(WidgetBuilder, abc.ListWidgetBuilder):
 
     def on_model_pop(self, event: Event) -> None:
         if self.should_build():
-            self.local_insert(index=event.kwargs['index'])
+            self.local_pop(index=event.kwargs['index'])
             self.update_parent()
 
     def local_append(self, index: int) -> None:
