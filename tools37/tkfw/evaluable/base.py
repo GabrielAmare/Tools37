@@ -14,6 +14,8 @@ __all__ = [
     'EvaluableEq',
     'EvaluableNe',
     'EvaluableAnd',
+    'EvaluableOr',
+    'EvaluableIn',
     'EvaluableStr',
 ]
 
@@ -169,6 +171,36 @@ class EvaluableAnd(abc.EvaluableExpression):
 
     def evaluate(self, data: Any):
         return self.left.evaluate(data) and self.right.evaluate(data)
+
+    def get_paths(self) -> List[EvaluablePath]:
+        return self.left.get_paths() + self.right.get_paths()
+
+
+@dataclass
+class EvaluableOr(abc.EvaluableExpression):
+    left: abc.EvaluableExpression
+    right: abc.EvaluableExpression
+
+    def __str__(self):
+        return f"{self.left!s} or {self.right!s}"
+
+    def evaluate(self, data: Any):
+        return self.left.evaluate(data) or self.right.evaluate(data)
+
+    def get_paths(self) -> List[EvaluablePath]:
+        return self.left.get_paths() + self.right.get_paths()
+
+
+@dataclass
+class EvaluableIn(abc.EvaluableExpression):
+    left: abc.EvaluableExpression
+    right: abc.EvaluableExpression
+
+    def __str__(self):
+        return f"{self.left!s} in {self.right!s}"
+
+    def evaluate(self, data: Any):
+        return self.left.evaluate(data) in self.right.evaluate(data)
 
     def get_paths(self) -> List[EvaluablePath]:
         return self.left.get_paths() + self.right.get_paths()
