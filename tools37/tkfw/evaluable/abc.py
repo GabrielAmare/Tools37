@@ -1,11 +1,15 @@
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, List
 
 __all__ = [
     'Evaluable',
     'EvaluableGetter',
     'EvaluableSetter',
-    'EvaluableBinder'
+    'EvaluableBinder',
+    'EvaluableExpression',
+    'EvaluablePath',
 ]
 
 
@@ -32,4 +36,16 @@ class EvaluableSetter(Evaluable, ABC):
 
 
 class EvaluableBinder(EvaluableGetter, EvaluableSetter, ABC):
+    """"""
+
+
+class EvaluableExpression(Evaluable, ABC):
+    """Super class for evaluable expressions."""
+
+    @abstractmethod
+    def get_paths(self) -> List[EvaluablePath]:
+        """"""
+
+
+class EvaluablePath(EvaluableBinder, EvaluableExpression, ABC):
     """"""
