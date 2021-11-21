@@ -179,10 +179,10 @@ class EvaluableStr(abc.EvaluableExpression):
     value: str
 
     def __str__(self):
-        return repr(self.value)
+        return self.value
 
     def evaluate(self, data: Any):
-        return self.value
+        return eval(self.value)
 
     def get_paths(self) -> List[EvaluablePath]:
         return []
