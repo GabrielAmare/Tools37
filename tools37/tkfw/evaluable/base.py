@@ -61,7 +61,7 @@ class EvaluableListItem(EvaluateGetter, abc.EvaluableBinder):
 
 
 @dataclass
-class EvaluablePath(EvaluateGetter, abc.EvaluableBinder):
+class EvaluablePath(EvaluateGetter, abc.EvaluablePath):
     steps: List[abc.EvaluableBinder]
 
     def __str__(self):
@@ -92,6 +92,9 @@ class EvaluablePath(EvaluateGetter, abc.EvaluableBinder):
 
     def __add__(self, other: 'EvaluablePath') -> 'EvaluablePath':
         return replace(self, steps=self.steps + other.steps)
+
+    def get_paths(self) -> List[abc.EvaluablePath]:
+        return [self]
 
 
 @dataclass
