@@ -113,14 +113,17 @@ class ListWidgetFactory(WidgetFactory):
         else:
             elements = []
 
-        if len(elements) > len(self.widgets):
+        number_of_elements = len(elements)
+        number_of_widgets = len(self.widgets)
+
+        if number_of_elements > number_of_widgets:
             # we should create new widgets.
-            for index in range(len(self.widgets), len(elements)):
+            for index in range(number_of_widgets, number_of_elements):
                 self.local_append(index=index)
 
-        elif len(elements) < len(self.widgets):
+        elif number_of_elements < number_of_widgets:
             # we should remove widgets.
-            for index in reversed(list(range(len(elements), len(self.widgets)))):
+            for index in reversed(list(range(number_of_elements, number_of_widgets))):
                 self.local_remove(index)
 
     def get_widgets(self) -> List[Component]:
