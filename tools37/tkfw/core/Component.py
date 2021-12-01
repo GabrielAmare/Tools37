@@ -4,7 +4,7 @@ from typing import Tuple
 
 from . import abc
 from .ComponentConfig import ComponentConfig
-from .builders import WidgetBuilder
+from .builders import WidgetFactory
 from .events import Observer, Event
 from ..dynamic import Dynamic, DynamicData, DynamicStyle, view, DynamicDict, DynamicList, DynamicBinder
 from ..evaluable import evaluate, Evaluable, EvaluablePath
@@ -87,7 +87,7 @@ class Component(abc.Component):
         return None
 
     def _init_builders(self):
-        return [WidgetBuilder.make(parent=self, factory=factory) for factory in self.__config__.widgets_factory]
+        return [WidgetFactory.make(parent=self, factory=factory) for factory in self.__config__.widgets_factory]
 
     @classmethod
     def _init_component_class(cls, kwargs: dict) -> None:

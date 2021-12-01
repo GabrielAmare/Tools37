@@ -7,9 +7,9 @@ from ..dynamic import DynamicList, DynamicListItem
 from .events import Observer, Event
 
 __all__ = [
-    'WidgetBuilder',
-    'ListWidgetBuilder',
-    'UnitWidgetBuilder'
+    'WidgetFactory',
+    'ListWidgetFactory',
+    'UnitWidgetFactory'
 ]
 
 
@@ -18,11 +18,11 @@ def _del_widget(widget: Component) -> None:
     widget.destroy()
 
 
-class WidgetBuilder(Observer, abc.WidgetBuilder, ABC):
+class WidgetFactory(Observer, abc.WidgetBuilder, ABC):
     @staticmethod
     def make(parent: Component, factory: Type[Component]) -> abc.WidgetBuilder:
         """Create a ChildrenBuilder depending on the configuration of `cls`"""
-        cls = ListWidgetBuilder if factory.is_iterable() else UnitWidgetBuilder
+        cls = ListWidgetFactory if factory.is_iterable() else UnitWidgetFactory
         return cls(parent=parent, factory=factory)
 
     def __init__(self, parent: Component, factory: Type[Component]):
@@ -46,7 +46,7 @@ class WidgetBuilder(Observer, abc.WidgetBuilder, ABC):
         return self.factory.evaluate_condition(data=self.parent.data)
 
 
-class UnitWidgetBuilder(WidgetBuilder):
+class UnitWidgetFactory(WidgetFactory):
     """"""
     widget: Optional[Component]
 
@@ -80,7 +80,7 @@ class UnitWidgetBuilder(WidgetBuilder):
             self.widget = None
 
 
-class ListWidgetBuilder(WidgetBuilder):
+class ListWidgetFactory(WidgetFactory):
     """"""
     key: str
     iterable: DynamicList
