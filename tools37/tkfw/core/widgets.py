@@ -1,11 +1,23 @@
 import tkinter as tk
 
-from .tree_roles import Root, Node, Leaf
+from .roles import Root, Node, Leaf
+from .utils import Horizontal, Vertical, Fill
+from ..dynamic import DynamicBinder
+
+__all__ = [
+    'Tk',
+    'Frame',
+    'LabelFrame',
+    'Label',
+    'Button',
+    'Entry',
+    'Row', 'Column', 'LargeRow', 'LargeColumn'
+]
 
 
 class Tk(tk.Tk, Root):
     def __init_subclass__(cls, **kwargs):
-        cls._init_tree_class(kwargs)
+        cls._init_component_class(kwargs)
 
     def __init__(self, data: dict = None):
         tk.Tk.__init__(self)
@@ -24,7 +36,7 @@ class Tk(tk.Tk, Root):
 
 class Frame(tk.Frame, Node):
     def __init_subclass__(cls, **kwargs):
-        cls._init_tree_class(kwargs)
+        cls._init_component_class(kwargs)
 
     def __init__(self, parent, data: dict = None, style: dict = None):
         tk.Frame.__init__(self, parent)
@@ -33,7 +45,7 @@ class Frame(tk.Frame, Node):
 
 class LabelFrame(tk.LabelFrame, Node):
     def __init_subclass__(cls, **kwargs):
-        cls._init_tree_class(kwargs)
+        cls._init_component_class(kwargs)
 
     def __init__(self, parent, data: dict = None, style: dict = None):
         tk.LabelFrame.__init__(self, parent)
@@ -42,7 +54,7 @@ class LabelFrame(tk.LabelFrame, Node):
 
 class Label(tk.Label, Leaf):
     def __init_subclass__(cls, **kwargs):
-        cls._init_tree_class(kwargs)
+        cls._init_component_class(kwargs)
 
     def __init__(self, parent, data: dict = None, style: dict = None):
         tk.Label.__init__(self, parent)
@@ -51,7 +63,7 @@ class Label(tk.Label, Leaf):
 
 class Button(tk.Button, Leaf):
     def __init_subclass__(cls, **kwargs):
-        cls._init_tree_class(kwargs)
+        cls._init_component_class(kwargs)
 
     def __init__(self, parent, data: dict = None, style: dict = None):
         tk.Button.__init__(self, parent)
@@ -63,16 +75,16 @@ class Button(tk.Button, Leaf):
 
 class Entry(tk.Entry, Leaf):
     def __init_subclass__(cls, **kwargs):
-        cls._init_tree_class(kwargs)
+        cls._init_component_class(kwargs)
 
     def __init__(self, parent, data: dict = None, style: dict = None):
         tk.Entry.__init__(self, parent)
         Leaf.__init__(self, parent, data, style)
 
-        self._variable = tk.StringVar(self, value=self._value_getter.view() if self._value_getter else '')
+        self._variable = tk.StringVar(self, value=self.binder.view() if isinstance(self.binder, DynamicBinder) else '')
         self.config(textvariable=self._variable)
 
-        if self._value_setter:
+        if isinstance(self.binder, DynamicBinder):
             self.bind('<Any-KeyRelease>', self._update_model)
 
     def _get_local(self):
@@ -80,3 +92,19 @@ class Entry(tk.Entry, Leaf):
 
     def _set_local(self, value):
         self._variable.set(value)
+
+
+class Row(Frame, Horizontal):
+    pass
+
+
+class Column(Frame, Vertical):
+    pass
+
+
+class LargeRow(Frame, Horizontal, Fill):
+    pass
+
+
+class LargeColumn(Frame, Vertical, Fill):
+    pass
