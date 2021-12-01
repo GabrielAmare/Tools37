@@ -33,16 +33,20 @@ class WidgetFactory(Observer, abc.WidgetBuilder, ABC):
             self.on(name=f".{path!s}", emitter=self.parent.data, function=self.rebuild)
 
     def rebuild(self, _: Event = None):
+        """(re)build the widgets and update the parent."""
         self.build()
         self.update_parent()
 
     def update_parent(self):
+        """Query an update on the factory parent."""
         self.parent.update()
 
     def create(self, data: dict = None, style: dict = None) -> Component:
+        """Create a new widget with data & style."""
         return self.factory(parent=self.parent, data=data, style=style)
 
     def should_build(self) -> bool:
+        """Return True if the condition evaluates to True."""
         return self.factory.evaluate_condition(data=self.parent.data)
 
 
